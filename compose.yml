@@ -1,0 +1,29 @@
+version: '3'
+services:
+  github-backup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: github-backup
+    env_file:
+      - .env
+    volumes:
+      - ./clone.sh:/clone.sh
+      - ./pull.sh:/pull.sh
+      - ./repos:/repos
+    command: /bin/bash -c "/clone.sh && tail -f /dev/null"
+    labels:
+      - ofelia.enabled=true
+      - ofelia.job-exec.clone.schedule=@daily
+      - ofelia.job-exec.clone.command=/clone.sh
+      - ofelia.job-exec.pull.schedule=@hourly
+      - ofelia.job-exec.pull.command=/pull.sh
+
+  ofelia:
+    image: mcuadros/ofelia:latest
+    container_name: ofelia
+    depends_on:
+      - github-backup
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: daemon --docker
