@@ -1,6 +1,6 @@
-# Mirror/Sync Github Organization Repos locally
+# Automation of Mirror/Sync Github Organization Repos locally
 
-Recources [link](https://gist.github.com/germanviscuso/a77abd8a2fc64de7f15de6e43dbd904b)
+Mirror/Sync Github Organization Repos locally original recources [link](https://gist.github.com/germanviscuso/a77abd8a2fc64de7f15de6e43dbd904b)
 
 ## Quick start
 
@@ -11,14 +11,15 @@ Recources [link](https://gist.github.com/germanviscuso/a77abd8a2fc64de7f15de6e43
   - **ORG** - github organization name
 - deploy the containers: `docker compose up -d`
 
+### scripts details
+
 ## clone.sh
 
-- fetch first 200 repos of the organization
-- user credentials from .env file
-- clone each repo into root folder repos/
-- can be schedule to clone new repos (NB: cloning of the already existing repos will just failed and move to the next)
+- fetch first 200 repos of the organization specified in $ORG environment variables
+- authenticate to github using $USERNAME and $PASSWORD environment variables
+- clone each repo into subfolder *repos/*
 
 ## pull.sh
 
-- find all git repos contained in the root folder /repos
+- find all git repos root folders contained in subfolder *repos/*
 - for each repo exec pull command
