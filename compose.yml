@@ -5,6 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: github-backup
+    restart: unless-stopped
     env_file:
       - .env
     volumes:
@@ -22,6 +23,7 @@ services:
   ofelia:
     image: mcuadros/ofelia:latest
     container_name: ofelia
+    restart: unless-stopped
     depends_on:
       - github-backup
     volumes:
